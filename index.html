@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <table class="table table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">User ID</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </body>
+  <script type="text/javascript">
+    const tableBody = document.querySelector('tbody');
+    let count = 0;
+
+    fetch('http://localhost:8080/users/list')
+      .then(async res => {
+        const users = await res.json();
+
+        for (id in users) {
+          const { first, last } = users[id];
+          const row = document.createElement('tr');
+          const index = document.createElement('th');
+          const firstName = document.createElement('td');
+          const lastName = document.createElement('td');
+          const userId = document.createElement('td');
+
+          index.innerHTML = ++count;
+          firstName.innerHTML = first;
+          lastName.innerHTML = last;
+          userId.innerHTML = id;
+          row.appendChild(index);
+          row.appendChild(firstName);
+          row.appendChild(lastName);
+          row.appendChild(userId);
+          tableBody.appendChild(row);
+        }
+      });
+  </script>
+</html>
